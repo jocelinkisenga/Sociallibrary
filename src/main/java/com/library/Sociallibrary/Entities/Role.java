@@ -1,5 +1,7 @@
 package com.library.Sociallibrary.Entities;
 
+import com.library.Sociallibrary.Enums.RoleEnum;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +16,8 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String role_name;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role_name;
 
 
 }

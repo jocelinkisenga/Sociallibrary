@@ -21,12 +21,12 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String password;
     private String name;
     private String email;
+    private String password;
     private Boolean status = false;
     @OneToOne(cascade = CascadeType.ALL)
-    private final Role role;
+    private  Role role;
 
 
     @Override
