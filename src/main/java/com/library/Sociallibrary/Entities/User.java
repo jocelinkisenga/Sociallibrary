@@ -3,8 +3,10 @@ package com.library.Sociallibrary.Entities;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import io.jsonwebtoken.lang.Collections;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +31,7 @@ public class User implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return java.util.Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + this.role.getRole_name()));
     }
 
     @Override
