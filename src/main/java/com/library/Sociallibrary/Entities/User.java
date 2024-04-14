@@ -17,53 +17,48 @@ import lombok.*;
 @Table(name = "users")
 public class User implements UserDetails{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String password;
     private String name;
     private String email;
     private Boolean status = false;
+    @OneToOne(cascade = CascadeType.ALL)
+    private final Role role;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public String getPassword() {
-        // TODO Auto-generated method stub
         return this.password;
     }
 
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return this.email;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return this.status;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return this.status;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return this.status;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return this.status;
     }
 
