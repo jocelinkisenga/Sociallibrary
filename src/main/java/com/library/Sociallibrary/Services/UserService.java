@@ -1,5 +1,11 @@
 package com.library.Sociallibrary.Services;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +16,21 @@ import com.library.Sociallibrary.Repositories.UserRepositiry;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+
+
 @NoArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private UserRepositiry userRepositiry;
+
+    @Autowired
+    public UserService(BCryptPasswordEncoder bCryptPasswordEncoder, UserRepositiry userRepositiry) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.userRepositiry = userRepositiry;
+    }
 
     public void createUser(User user) {
 
@@ -27,9 +40,14 @@ public class UserService {
             throw new RuntimeException("Email invalide");
         }
 
-        Role roleUser = new Role();
-        roleUser.setRole_name(RoleEnum.USER);
-        user.setRole(roleUser);
+        Optional<User> userOptional = this.userRepositiry.findByEmail(user.getEmail());
+        if (userOptional.isPresent()) {
+            throw new RuntimeException("Email existe ");
+        }
+
+        Role role = new Role();
+        role.setLibelle(RoleEnum.USER);
+        user.setRole(role);
 
         this.userRepositiry.save(user);
     }
@@ -38,4 +56,8 @@ public class UserService {
         return bCryptPasswordEncoder.encode(password);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
+    }
 }

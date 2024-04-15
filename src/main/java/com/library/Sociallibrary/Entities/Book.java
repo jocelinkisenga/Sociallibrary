@@ -14,7 +14,8 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-
-    private String role_name;
+    private String title;
+    private String description;
+    private String cover;
 
 }
