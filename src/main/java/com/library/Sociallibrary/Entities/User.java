@@ -24,7 +24,7 @@ public class User implements UserDetails{
     private String name;
     private String email;
     private String password;
-    private Boolean status = false;
+    private Boolean status = true;
     @OneToOne(cascade = CascadeType.ALL)
     private  Role role;
 
