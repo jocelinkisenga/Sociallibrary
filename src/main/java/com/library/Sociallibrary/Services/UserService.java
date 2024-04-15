@@ -58,6 +58,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return this.userRepositiry.findByEmail(username).orElseThrow(
+                () ->
+                        new UsernameNotFoundException("user not exist"));
     }
 }
