@@ -24,7 +24,7 @@ public class ConfigSecurityApp {
                 .authorizeHttpRequests(
                         authorize -> authorize.requestMatchers(HttpMethod.POST, "/register")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/logim")
+                                .requestMatchers(HttpMethod.POST, "/login")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

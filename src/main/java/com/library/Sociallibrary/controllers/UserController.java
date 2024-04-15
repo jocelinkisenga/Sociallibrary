@@ -1,7 +1,10 @@
 package com.library.Sociallibrary.controllers;
 
 import com.library.Sociallibrary.Dto.AuthDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +16,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Map;
 
+@Slf4j
 @AllArgsConstructor
 @RestController
 public class UserController {
@@ -26,9 +30,11 @@ public class UserController {
     }
 
     @PostMapping(path = "login")
-    public Map<String string> login(@RequestBody AuthDto authDto){
-
-    }
-
-
+    public Map<String, String> login(@RequestBody AuthDto authDto) {
+      final   Authentication authenticate = this.authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authDto.email(), authDto.password())
+        );
+      log.info("rsult {}", authenticate.isAuthenticated());
+        return null;
+}
 }
